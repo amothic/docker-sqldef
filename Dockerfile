@@ -1,12 +1,12 @@
 FROM alpine:3.10 as builder
 
+ENV VERSION 0.4.13
+
 RUN set -ex \
     && apk add --no-cache curl tar \
-    && curl -fSL https://github.com/k0kubun/sqldef/releases/download/v0.4.13/mysqldef_linux_amd64.tar.gz -o mysqldef.tar.gz \
-    && mkdir /mysqldef \
-    && tar -zxf mysqldef.tar.gz -C /mysqldef
+    && curl -fSL https://github.com/k0kubun/sqldef/releases/download/v$VERSION/mysqldef_linux_amd64.tar.gz -o mysqldef.tar.gz \
+    && tar -zxf mysqldef.tar.gz
 
 FROM scratch
-COPY --from=builder /mysqldef/mysqldef /mysqldef/mysqldef
-WORKDIR /mysqldef
-ENTRYPOINT ["./mysqldef"]
+COPY --from=builder /mysqldef /usr/local/bin/mysqldef
+ENTRYPOINT ["mysqldef"]
