@@ -1,6 +1,6 @@
-FROM alpine:3.10 as builder
+FROM alpine:3.15 as builder
 
-ENV VERSION 0.5.14
+ENV VERSION 0.11.50
 
 RUN set -ex \
     && apk add --no-cache curl tar \
