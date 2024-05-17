@@ -1,6 +1,6 @@
-FROM alpine:3.15 as builder
+FROM alpine:3.19 as builder
 
-ENV VERSION 0.11.50
+ENV VERSION 0.17.8
 ARG TARGETPLATFORM
 
 RUN set -ex \
