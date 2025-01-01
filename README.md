@@ -1,3 +1,3 @@
-# docker-mysqldef
+# docker-sqldef
 
-https://github.com/k0kubun/sqldef
+https://github.com/sqldef/sqldef
