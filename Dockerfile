@@ -1,13 +1,18 @@
-FROM alpine:3.19 as builder
+FROM alpine:3.21 as builder
 
-ENV VERSION 0.17.8
+ARG SQLDEF_TOOL
+ARG VERSION
 ARG TARGETPLATFORM
 
 RUN set -ex \
     && apk add --no-cache curl tar \
-    && curl -fSL https://github.com/k0kubun/sqldef/releases/download/v$VERSION/mysqldef_linux_${TARGETPLATFORM#*/}.tar.gz -o mysqldef.tar.gz \
-    && tar -zxf mysqldef.tar.gz
+    && curl -fSL https://github.com/sqldef/sqldef/releases/download/${VERSION}/${SQLDEF_TOOL}_linux_${TARGETPLATFORM#*/}.tar.gz -o sqldef.tar.gz \
+    && tar -zxf sqldef.tar.gz
 
-FROM scratch
-COPY --from=builder /mysqldef /usr/local/bin/mysqldef
-ENTRYPOINT ["mysqldef"]
+FROM alpine:3.21
+
+ARG SQLDEF_TOOL
+ENV SQLDEF_TOOL=${SQLDEF_TOOL}
+
+COPY --from=builder /${SQLDEF_TOOL} /usr/local/bin/sqldef
+ENTRYPOINT ["sqldef"]
