@@ -1,9 +1,11 @@
 name: build
 
 on:
-  push:
-    tags:
-      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Specify the sqldef version to build (e.g. v0.17.24)
+        required: true
 
 jobs:
   build_and_push:
@@ -45,7 +47,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: |
             SQLDEF_TOOL=${{ matrix.tool }}
-            VERSION=${{ github.ref_name }}
+            VERSION=${{ inputs.version }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
