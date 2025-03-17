@@ -1,3 +1,7 @@
+This repository is archived. Please use the following docker images.
+
+https://hub.docker.com/u/sqldef
+
 # docker-sqldef
 
 https://github.com/sqldef/sqldef
